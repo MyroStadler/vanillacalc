@@ -62,9 +62,15 @@
                     case 'CLEAR':
                         return _output('');
                     case 'BACK':
-                        do {
-                            expression = expression.slice(0, -1).trimEnd();
-                        } while (isNaN(expression.substr(-1)));
+                        if (!isNaN(expression.substr(-1)) && expression.substr(-1) != ' ') {
+                            // just lop off the number
+                            expression = expression.slice(0, -1);
+                        } else {
+                            // lop off everything until i reach a number
+                            while (expression.substr(-1) == ' ' || isNaN(expression.substr(-1))) {
+                                expression = expression.slice(0, -1);
+                            };
+                        }
                         return _output(expression);
                     case 'SQRT':
                         try {

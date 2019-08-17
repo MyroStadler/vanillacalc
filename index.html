@@ -15,22 +15,24 @@
         }
         body, p, button {
             font-family: Verdana, _sans;
-            font-size: 2rem;
             color: black;
             text-align: center;
         }
         p.output {
-            padding: 1rem 2rem 1rem 2rem;
-            height: 5rem;
+            font-size: 1.25rem;
+            padding: 0.75rem 0 0.75rem 0;
+            height: 3.5rem;
             margin: 0;
             width: 100%;
             background-color: white;
             border: 1px solid darkgray;
         }
         button {
+            font-size: 1rem;
+            white-space: nowrap;
             margin: 0;
-            padding: 0.5rem;
-            height: 5rem;
+            padding: 0.4rem;
+            height: 2.8rem;
             overflow: hidden;
             width: 25%;
             display: inline-block;
@@ -51,6 +53,9 @@
                 document.getElementsByClassName('output')[0].innerHTML = output + '_';
                 return output;
             };
+            var _eval = function(evaluate) {
+                return eval(evaluate.replace('^', '**'));
+            };
             var _processInput = function(command) {
                 if (!isNaN(command)) {
                     // is a numeric string
@@ -59,7 +64,7 @@
                 }
                 // if you can read this, you are not a number
                 switch (command) {
-                    case 'CLEAR':
+                    case 'CE':
                         return _output('');
                     case 'BACK':
                         if (!isNaN(expression.substr(-1)) && expression.substr(-1) != ' ') {
@@ -75,7 +80,7 @@
                     case 'SQRT':
                         try {
                             var evaluateMe = 'Math.sqrt(' + expression + ')';
-                            var result = eval(evaluateMe);
+                            var result = _eval(evaluateMe);
                             if (isNaN(result)) {
                                 throw new Error(result);
                             } else {
@@ -87,7 +92,7 @@
                         }
                     case '=':
                         try {
-                            return _output(eval(expression));
+                            return _output(_eval(expression));
                         } catch (e) {
                             alert(expression + ' is not a valid expression');
                             return '';
@@ -118,6 +123,6 @@
     <button onclick="app.clicked(this);">4</button><button onclick="app.clicked(this);">5</button><button onclick="app.clicked(this);">6</button><button onclick="app.clicked(this);">-</button>
     <button onclick="app.clicked(this);">4</button><button onclick="app.clicked(this);">8</button><button onclick="app.clicked(this);">9</button><button onclick="app.clicked(this);">/</button>
     <button onclick="app.clicked(this);">0</button><button onclick="app.clicked(this);">.</button><button onclick="app.clicked(this);">BACK</button><button onclick="app.clicked(this);">*</button>
-    <button onclick="app.clicked(this);">CLEAR</button><button onclick="app.clicked(this);">SQRT</button><button onclick="app.clicked(this);">** (^ / POW)</button><button onclick="app.clicked(this);">%</button>
+    <button onclick="app.clicked(this);">CE</button><button onclick="app.clicked(this);">SQRT</button><button onclick="app.clicked(this);">^</button><button onclick="app.clicked(this);">%</button>
     <button onclick="app.clicked(this);">=</button><button onclick="app.clicked(this);">(</button><button onclick="app.clicked(this);">)</button>
 </body>
